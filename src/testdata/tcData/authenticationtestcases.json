@@ -1,0 +1,37 @@
+{
+    "AuthTestCases": [
+        {
+            "TCName": "Register User",
+            "testdata": {
+                "firstName": "John",
+                "lastName": "Doe",
+                "email": "testuser@example.com",
+                "password": "password123"
+            }
+        },
+        {
+            "TCName": "Login User with correct email and password",
+            "testdata": {
+                "email": "sampleTest1@gmail.com",
+                "password": "sampleTest1",
+                "username": "Sample"
+            }
+        },
+        {
+            "TCName": "Login User with incorrect email and password",
+            "testdata": {
+                "email": "sampleTest1@gd",
+                "password": "password123",
+                "errorMessage": "Your email or password is incorrect!"
+            }
+        },
+        {
+            "TCName": "Logout User",
+            "testdata": {
+                "email": "testuser@example.com",
+                "password": "password1234"
+            }
+        }
+        
+    ]
+}
