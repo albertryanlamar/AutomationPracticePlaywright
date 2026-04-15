@@ -43,7 +43,7 @@ export class LoginPage{
     }
    
     //signup page methods
-    async signup(name: string, email: string) {
+    async signup(name?: string, email?: string) {
         await this.act.fillSafe(this.nameTextBox, name);
         await this.act.fillSafe(this.emailTextBoxSignup, email);
         await this.act.clickSafe(this.signupButton);

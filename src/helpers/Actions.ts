@@ -31,4 +31,9 @@ export class Actions {
   async assertText(element: Locator, text: string) {
     await expect(element).toHaveText(text);
   }
+
+  async selectRadioBtn(element:Locator,title:string){
+    await expect(element).toBeVisible();
+    const text:string[] = await element.getAttribute('value');
+  }
 }
