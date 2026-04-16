@@ -3,6 +3,7 @@ import { LandingPage } from "../pages/landingPage";
 import { LoginPage } from "../pages/LoginPage";
 import { BasePage } from "../pages/BasePage";
 import { AccountPage } from "../pages/AcountPage";
+import { SignupPage } from "../pages/SignupPage";
 
 
 
@@ -11,6 +12,7 @@ type MyFixtures = {
     loginPage:LoginPage;
     basePage:BasePage;
     accountPage:AccountPage;
+    singupPage:SignupPage;
 }
 
 export const test = base.extend<MyFixtures>({
@@ -29,7 +31,11 @@ export const test = base.extend<MyFixtures>({
     accountPage:async({page},use)=>{
         const accountPage = new AccountPage(page);
         await use(accountPage);
-    }   
+    },  
+    singupPage:async({page},use)=>{
+        const signupPage = new SignupPage(page);
+        await use(signupPage);
+    }
 
 })
 

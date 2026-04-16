@@ -74,7 +74,7 @@ test.describe('Authentication Test Cases', () => {
     })
 
     const tcData3 = getTc('Register User')
-    test(tcData3.TCname,async({landingPage,loginPage})=>{
+    test(tcData3.TCname,async({landingPage,loginPage,singupPage})=>{
         test.setTimeout(100000);
         await test.step('Navigate to landing page', async () => {
             await landingPage.openWebsite();
@@ -92,11 +92,31 @@ test.describe('Authentication Test Cases', () => {
             ]);
         });
 
+        const data = tcData3.testdata;
+        const name = data.name.trim() ? data.name : faker.person.firstName();
+        const firstname = data.firstname.trim() ? data.firstname : faker.person.firstName();
+        const lastname = data.lastname.trim() ? data.lastname : faker.person.lastName();
+        const email =data.email.trim()? data.email: faker.internet.email();
+        const password = data.password.trim() ? data.password : faker.internet.password();
+        const country = data.country.trim() ? data.country : faker.location.country();
+        const state = data.state.trim() ? data.state : faker.location.state();
+        const city = data.city.trim() ? data.city : faker.location.city();
+        const zipcode = data.zipcode.trim() ? data.zipcode : faker.location.zipCode();
+        const mobilenumber = data.mobilenumber.trim() ? data.mobilenumber : faker.phone.number();
+        const company = data.company.trim() ? data.company : faker.company.name();
+        const title = data.title.trim() ? data.title : 'Mr';
+        const address2 = data.address2.trim() ? data.address2 : faker.location.streetAddress();
+        const address1 = data.address1.trim() ? data.address1 : faker.location.streetAddress();
+
         await test.step(' Enter name and email address and click signup', async ()=>{
-           const data = tcData3.testdata;
-           const name = data.name.trim() ? data.name : faker.person.firstName();
-           const email =data.email.trim()? data.email: faker.internet.email();
-           await loginPage.signup()
+           Promise.all([
+            await loginPage.signup(name,email),
+            await singupPage.page.waitForLoadState('load', { timeout: 50000 })
+           ]);
+        })
+
+        await test.step('Fill details: Title, Name, Email, Password, Date of birth',async()=>{
+            await singupPage.fillForm(password,firstname,lastname,'address1',country,state,city,zipcode,mobilenumber); 
         })
     })
 })

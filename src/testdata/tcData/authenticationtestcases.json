@@ -6,7 +6,17 @@
                 "firstName": "John",
                 "lastName": "Doe",
                 "email": "testuser@example.com",
-                "password": "password123"
+                "password": "password123",
+                "bday":"",
+                "country":"Philippines",
+                "state":"Manila",
+                "city":"Manila",
+                "zipcode":"1000",
+                "mobilenumber":"1234567890",
+                "address1":"123 Main St",
+                "address2":"",
+                "company":"",
+                "title":"Mr"
             }
         },
         {

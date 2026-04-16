@@ -7,6 +7,11 @@ export class Actions {
     await expect(element).toBeEnabled();
     await element.click();
   }
+  async checksafe(element: Locator) {
+    await expect(element).toBeVisible({ timeout: 5000 });
+    await expect(element).toBeEnabled();
+    await element.check();
+  }
 
   async fillSafe(element: Locator, value:any) {
     await expect(element).toBeVisible({timeout:120000});
@@ -32,8 +37,17 @@ export class Actions {
     await expect(element).toHaveText(text);
   }
 
-  async selectRadioBtn(element:Locator,title:string){
+  async selectTitle(element: Locator) {
     await expect(element).toBeVisible();
-    const text:string[] = await element.getAttribute('value');
+    await element.check();
+  }
+
+  async selectDropdownByLabel(element: Locator, value: string) {
+    await expect(element).toBeVisible();
+    await element.selectOption({label: `${value}`});
+  }
+  async selectDropdownByValue(element: Locator, value: string) {
+    await expect(element).toBeVisible();
+    await element.selectOption({ value: `${value}`});
   }
 }

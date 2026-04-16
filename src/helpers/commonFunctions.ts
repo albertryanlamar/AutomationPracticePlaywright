@@ -33,3 +33,21 @@ export function checkFile(path:any){
     }
     return path;
 }
+
+export function sdsad(inputdate){
+
+    const date = new Date(inputdate);
+    const day = date.getDate();
+    const month = date.getMonth();
+    const year = date.getFullYear(); 
+
+    const months = [
+  "january","february","march","april","may","june",
+  "july","august","september","october","november","december"
+];
+
+const monthValue = isNaN(Number(inputdate))? String(months.indexOf(inputdate.toLowerCase()) + 1)
+  : inputdate;
+
+  return monthValue;
+}
