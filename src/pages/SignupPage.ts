@@ -1,32 +1,32 @@
-import {Locator, Page } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 import { Actions } from "../helpers/Actions";
 
 export class SignupPage {
 
-    page:Page;
-    act:Actions
-    passwordTextbox:Locator;
-    fnameTextBox:Locator
-    lnameTextBox:Locator
-    newsLetterCheckBox:Locator
-    offersCheckBox:Locator
-    companyTextBox:Locator
-    address1TextBox:Locator;
-    address2TextBox:Locator;
-    countryTextBox:Locator;
-    stateTextBox:Locator;
-    cityTextBox:Locator;
-    zipcodeTextBox:Locator;
-    mobilenumberTextBox:Locator;
-    createAccountButton:Locator;
-    nameTextBox:Locator;
-    dayDropdown:Locator;
-    monthDropdown:Locator;
-    yearDropdown:Locator;
+    page: Page;
+    act: Actions
+    passwordTextbox: Locator;
+    fnameTextBox: Locator
+    lnameTextBox: Locator
+    newsLetterCheckBox: Locator
+    offersCheckBox: Locator
+    companyTextBox: Locator
+    address1TextBox: Locator;
+    address2TextBox: Locator;
+    countryTextBox: Locator;
+    stateTextBox: Locator;
+    cityTextBox: Locator;
+    zipcodeTextBox: Locator;
+    mobilenumberTextBox: Locator;
+    createAccountButton: Locator;
+    nameTextBox: Locator;
+    dayDropdown: Locator;
+    monthDropdown: Locator;
+    yearDropdown: Locator;
 
 
 
-    constructor(page:Page) {
+    constructor(page: Page) {
         this.act = new Actions();
         this.page = page;
         this.nameTextBox = this.page.getByRole('textbox', { name: 'Name *' });
@@ -50,33 +50,50 @@ export class SignupPage {
         this.createAccountButton = this.page.getByRole('button', { name: 'Create Account' });
     }
 
-    async fillForm(password:string,fname:string,lname:string,address1:string,country:string,state,city,zipcode,mobilenumber,company?,title?,bday?,address2?,chckNewsletter?:boolean,chkOffers?:boolean,name?){
+    async fillForm(data: {
+        password: string;
+        fname: string;
+        lname: string;
+        address1: string;
+        country: string;
+        state: string;
+        city: string;
+        zipcode: string;
+        mobilenumber: string;
+        company?: string;
+        title?: string;
+        bday?: string;
+        address2?: string;
+        chckNewsletter?: boolean;
+        chkOffers?: boolean;
+        name?: string;
+    }) {
         //accoount information
-        if(title)await this.act.selectTitle( this.page.locator(`input[name="title"][value="${title}"]`));
-        if(name)await this.act.fillSafe(this.nameTextBox,name);
-        await this.act.fillSafe(this.passwordTextbox,password);
-        if(bday){
-            const date = new Date(bday);
+        if (data.title) await this.act.selectTitle(this.page.locator(`input[name="title"][value="${data.title}"]`));
+        if (data.name) await this.act.fillSafe(this.nameTextBox, data.name);
+        await this.act.fillSafe(this.passwordTextbox, data.password);
+        if (data.bday) {
+            const date = new Date(data.bday);
             const day = date.getDate();
-            const month = date.getMonth();  
+            const month = date.getMonth();
             const year = date.getFullYear();
             await this.act.selectDropdownByValue(this.dayDropdown, String(day));
             await this.act.selectDropdownByValue(this.monthDropdown, String(month + 1));
             await this.act.selectDropdownByValue(this.yearDropdown, String(year));
         }
-        if(chckNewsletter)await this.act.checksafe(this.newsLetterCheckBox);
-        if(chkOffers)await this.act.checksafe(this.offersCheckBox);
+        if (data.chckNewsletter) await this.act.checksafe(this.newsLetterCheckBox);
+        if (data.chkOffers) await this.act.checksafe(this.offersCheckBox);
         // addressinformation
-        await this.act.fillSafe(this.fnameTextBox,fname);
-        await this.act.fillSafe(this.lnameTextBox,lname);
-        if(company)await this.act.fillSafe(this.companyTextBox,company);
-        await this.act.fillSafe(this.address1TextBox,address1);
-        if(address2)await this.act.fillSafe(this.page.locator('#address2'),address2);
-        await this.act.selectDropdownByLabel(this.countryTextBox,country);
-        await this.act.fillSafe(this.stateTextBox,state);
-        await this.act.fillSafe(this.cityTextBox,city);
-        await this.act.fillSafe(this.zipcodeTextBox,zipcode);
-        await this.act.fillSafe(this.mobilenumberTextBox,mobilenumber);
+        await this.act.fillSafe(this.fnameTextBox, data.fname);
+        await this.act.fillSafe(this.lnameTextBox, data.lname);
+        if (data.company) await this.act.fillSafe(this.companyTextBox, data.company);
+        await this.act.fillSafe(this.address1TextBox, data.address1);
+        if (data.address2) await this.act.fillSafe(this.page.locator('#address2'), data.address2);
+        await this.act.selectDropdownByLabel(this.countryTextBox, data.country);
+        await this.act.fillSafe(this.stateTextBox, data.state);
+        await this.act.fillSafe(this.cityTextBox, data.city);
+        await this.act.fillSafe(this.zipcodeTextBox, data.zipcode);
+        await this.act.fillSafe(this.mobilenumberTextBox, data.mobilenumber);
     }
 
 

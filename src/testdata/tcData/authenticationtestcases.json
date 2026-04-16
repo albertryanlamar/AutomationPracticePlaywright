@@ -3,12 +3,13 @@
         {
             "TCName": "Register User",
             "testdata": {
+                "name": "John Doe",
                 "firstName": "John",
                 "lastName": "Doe",
-                "email": "testuser@example.com",
+                "email": "",
                 "password": "password123",
                 "bday":"",
-                "country":"Philippines",
+                "country":"United States",
                 "state":"Manila",
                 "city":"Manila",
                 "zipcode":"1000",

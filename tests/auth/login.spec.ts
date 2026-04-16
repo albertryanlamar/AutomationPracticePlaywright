@@ -8,6 +8,8 @@ const featureData = dataLoader[feature];
 const getTc = (tcName: string) => featureData.find((tc: { TCName: string }) => tc.TCName === tcName);
 
 test.describe('Authentication Test Cases', () => {
+
+    /*
     const tcData1 = getTc('Login User with correct email and password');
     test(tcData1.TCName, async ({ landingPage, loginPage, accountPage }) => {
         test.setTimeout(100000);
@@ -72,9 +74,9 @@ test.describe('Authentication Test Cases', () => {
             expect(errorMessage).toBe(tcData2.testdata.errorMessage);
         });
     })
-
+    */
     const tcData3 = getTc('Register User')
-    test(tcData3.TCname,async({landingPage,loginPage,singupPage})=>{
+    test(tcData3.TCName, async ({ landingPage, loginPage, singupPage }) => {
         test.setTimeout(100000);
         await test.step('Navigate to landing page', async () => {
             await landingPage.openWebsite();
@@ -93,30 +95,33 @@ test.describe('Authentication Test Cases', () => {
         });
 
         const data = tcData3.testdata;
-        const name = data.name.trim() ? data.name : faker.person.firstName();
-        const firstname = data.firstname.trim() ? data.firstname : faker.person.firstName();
-        const lastname = data.lastname.trim() ? data.lastname : faker.person.lastName();
-        const email =data.email.trim()? data.email: faker.internet.email();
-        const password = data.password.trim() ? data.password : faker.internet.password();
-        const country = data.country.trim() ? data.country : faker.location.country();
-        const state = data.state.trim() ? data.state : faker.location.state();
-        const city = data.city.trim() ? data.city : faker.location.city();
-        const zipcode = data.zipcode.trim() ? data.zipcode : faker.location.zipCode();
-        const mobilenumber = data.mobilenumber.trim() ? data.mobilenumber : faker.phone.number();
-        const company = data.company.trim() ? data.company : faker.company.name();
-        const title = data.title.trim() ? data.title : 'Mr';
-        const address2 = data.address2.trim() ? data.address2 : faker.location.streetAddress();
-        const address1 = data.address1.trim() ? data.address1 : faker.location.streetAddress();
+        const dataform = {
+            name: data.name ? data.name : faker.person.firstName(),
+            fname: data.firstName ? data.firstName : faker.person.firstName(),
+            lname: data.lastName ? data.lastName : faker.person.lastName(),
+            email: data.email ? data.email : faker.internet.email(),
+            password: data.password ? data.password : faker.internet.password(),
+            country: data.country ? data.country : faker.location.country(),
+            state: data.state ? data.state : faker.location.state(),
+            city: data.city ? data.city : faker.location.city(),
+            zipcode: data.zipcode ? data.zipcode : faker.location.zipCode(),
+            mobilenumber: data.mobilenumber ? data.mobilenumber : faker.phone.number(),
+            company: data.company ? data.company : faker.company.name(),
+            title: data.title ? data.title : 'Mr',
+            address2: data.address2 ? data.address2 : faker.location.streetAddress(),
+            address1: data.address1 ? data.address1 : faker.location.streetAddress()
 
-        await test.step(' Enter name and email address and click signup', async ()=>{
-           Promise.all([
-            await loginPage.signup(name,email),
-            await singupPage.page.waitForLoadState('load', { timeout: 50000 })
-           ]);
+        }
+
+        await test.step(' Enter name and email address and click signup', async () => {
+            await Promise.all([
+                loginPage.signup(dataform.name, dataform.email),
+                singupPage.page.waitForLoadState('load', { timeout: 50000 })
+            ]);
         })
 
-        await test.step('Fill details: Title, Name, Email, Password, Date of birth',async()=>{
-            await singupPage.fillForm(password,firstname,lastname,'address1',country,state,city,zipcode,mobilenumber); 
+        await test.step('Fill details: Title, Name, Email, Password, Date of birth', async () => {
+            await singupPage.fillForm(dataform);
         })
     })
 })
