@@ -29,7 +29,7 @@ export class SignupPage {
     constructor(page: Page) {
         this.act = new Actions();
         this.page = page;
-        this.nameTextBox = this.page.getByRole('textbox', { name: 'Name *' });
+        this.nameTextBox = this.page.getByRole('textbox', { name: 'Name' });
         this.passwordTextbox = this.page.getByRole('textbox', { name: 'Password *' });
         this.dayDropdown = this.page.getByRole('radio');//two elements
         this.monthDropdown = this.page.locator('select[name="days"]');
@@ -95,6 +95,10 @@ export class SignupPage {
         await this.act.fillSafe(this.zipcodeTextBox, data.zipcode);
         await this.act.fillSafe(this.mobilenumberTextBox, data.mobilenumber);
     }
+
+    async clickCreateAccount() {
+        await this.act.clickSafe(this.createAccountButton);
+    }   
 
 
 }

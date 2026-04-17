@@ -42,6 +42,14 @@
                 "email": "testuser@example.com",
                 "password": "password1234"
             }
+        },
+        {
+            "TCName":"Register User with existing email",
+            "testdata":{
+                "existingEmail":"sampleTest1@gmail.com",
+                "existingName":"Sample",
+                "errorMessage":"Email Address already exist!"
+            }
         }
         
     ]

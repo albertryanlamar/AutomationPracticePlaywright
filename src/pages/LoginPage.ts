@@ -14,6 +14,7 @@ export class LoginPage{
     nameTextBox:Locator;
     emailTextBoxSignup:Locator;
     signupButton:Locator;
+    signupErrorContainer:Locator;
 
     constructor(page: any) {
 
@@ -29,6 +30,7 @@ export class LoginPage{
          this.nameTextBox = page.getByRole('textbox', { name: 'Name' })
          this.emailTextBoxSignup = this.page.locator("//input[@data-qa='signup-email']");
          this.signupButton = this.page.getByRole('button', { name: 'Signup' });
+         this.signupErrorContainer = this.page.locator('.signup-form');
 
     }
     
@@ -40,6 +42,11 @@ export class LoginPage{
     }
     async getLoginErrorMessage(message:string){ 
         return await this.errorContainer.getByText(message).innerText();
+    }
+
+    async getsignupErrorMessage(message:string){
+        await this.signupErrorContainer.waitFor({ state: 'visible', timeout: 5000 });
+        return await this.signupErrorContainer.getByText(message).innerText();
     }
    
     //signup page methods

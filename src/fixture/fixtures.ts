@@ -4,6 +4,8 @@ import { LoginPage } from "../pages/LoginPage";
 import { BasePage } from "../pages/BasePage";
 import { AccountPage } from "../pages/AcountPage";
 import { SignupPage } from "../pages/SignupPage";
+import { CreatedPage } from "../pages/CreatedPage";
+import { DeletedPage } from "../pages/DeletedPage";
 
 
 
@@ -13,6 +15,8 @@ type MyFixtures = {
     basePage:BasePage;
     accountPage:AccountPage;
     singupPage:SignupPage;
+    createdPage:CreatedPage;
+    deletedPage:DeletedPage;
 }
 
 export const test = base.extend<MyFixtures>({
@@ -35,7 +39,16 @@ export const test = base.extend<MyFixtures>({
     singupPage:async({page},use)=>{
         const signupPage = new SignupPage(page);
         await use(signupPage);
+    },
+    createdPage:async({page},use)=>{
+        const createdPage = new CreatedPage(page);
+        await use(createdPage);
+    },
+    deletedPage:async({page},use)=>{
+        const deletedPage = new DeletedPage(page);
+        await use(deletedPage);
     }
+
 
 })
 
