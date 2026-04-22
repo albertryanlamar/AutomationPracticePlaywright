@@ -1,0 +1,21 @@
+{
+
+    "cartTestCases": [
+        {
+            "TCName": "Add Products in Cart",
+            "products": [
+                {
+                    "name": "Blue Top",
+                    "quantity": 2,
+                    "size": "M",
+                    "color": "Blue"
+                },
+                {
+                    "name": "Faded Short Sleeve T-shirts",
+                    "quantity": 1,
+                    "size": "L"               
+                }
+            ]
+        }
+    ]
+}

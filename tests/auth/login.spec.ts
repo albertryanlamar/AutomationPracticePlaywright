@@ -1,7 +1,6 @@
 import { test, expect } from "../../src/fixture/fixtures";
 import { readJsonTestdata } from "../../src/helpers/commonFunctions";
 import { faker } from '@faker-js/faker';
-import { AccountPage } from "../../src/pages/AcountPage";
 
 const feature = 'AuthTestCases';
 const dataLoader = readJsonTestdata('authenticationtestcases.json', 'tcData');
