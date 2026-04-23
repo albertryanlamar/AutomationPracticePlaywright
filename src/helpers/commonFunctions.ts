@@ -51,3 +51,8 @@ const monthValue = isNaN(Number(inputdate))? String(months.indexOf(inputdate.toL
 
   return monthValue;
 }
+
+
+export function getTc(tcName: string,featureData:any){
+    return featureData.find((tc: { TCName: string }) => tc.TCName === tcName);
+} 

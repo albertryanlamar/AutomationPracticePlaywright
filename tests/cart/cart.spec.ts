@@ -1,4 +1,4 @@
-import { test, expect } from "../../src/fixture/fixtures";
+import { test, expect } from "../../src/fixture/pageFixtures";
 import { readJsonTestdata } from "../../src/helpers/commonFunctions";
 
 
@@ -10,7 +10,7 @@ const getTc = (tcName:string) => featureData.find((tc:{TCName:string})=> tc.TCNa
 
 test.describe('Cart Test Cases', () => {
      const tcdata1= getTc('Add Products in Cart');
-     test(tcdata1.TCName, {tag:'@regression'}, async ({ landingPage, productsPage, cartPage }) => {
+     test(tcdata1.TCName, {tag:'@sanity'}, async ({ landingPage }) => {
         test.setTimeout(100000);
         await test.step('Navigate to landing page', async () => {
             await landingPage.openWebsite();
