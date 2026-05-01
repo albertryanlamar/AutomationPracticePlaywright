@@ -10,7 +10,7 @@ export class AccountPage {
     accountPageHomeLink:Locator;
     deleteAccountLink:Locator;
     logoutLink:Locator;
-
+    cartLink:Locator;
 
     constructor(page:Page){
         this.act = new Actions();
@@ -19,6 +19,7 @@ export class AccountPage {
         this.accountPageHomeLink = this.page.getByRole('link', { name: 'Home' });
         this.deleteAccountLink=this.page.getByRole('link', { name: 'Delete Account' })
         this.logoutLink = page.getByRole('link', { name: 'Logout' })
+        this.cartLink = page.getByRole('link', { name: 'Cart' }).first();
     }
     
     //accountpage methods
@@ -39,6 +40,11 @@ export class AccountPage {
     async clickLogoutLink(){
         await this.act.clickSafe(this.logoutLink);
     }
+
+    async clickCartLink(){
+        await this.act.clickSafe(this.cartLink);
+    }
+
 
 
 

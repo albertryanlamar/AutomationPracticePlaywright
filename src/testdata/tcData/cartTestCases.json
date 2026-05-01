@@ -9,18 +9,34 @@
             
                     {
                     "Name":"Blue Top",
-                    "quantity": 2,
-                    "size": "M",
-                    "color": "Blue"
+                    "quantity": 1,
+                    "price": 500
                     },
                     {
-                    "Name":"Blue Tops",
+                    "Name":"Men Tshirt",
+                    "quantity": 1,
+                    "price": 400
+                    }
+                ]
+            }
+        },
+        {
+            "TCName": "Place Order: Register while Checkout",
+            "testdata":
+            {
+                "email": "sampleTest1@gmail.com",
+                "password": "sampleTest1",
+                "username": "Sample",
+                "products":[
+            
+                    {
+                    "Name":"Blue Top",
                     "quantity": 2,
-                    "size": "M",
-                    "color": "Blue"
+                    "price": 500
                     }
                 ]
             }
         }
+        
     ]
 }

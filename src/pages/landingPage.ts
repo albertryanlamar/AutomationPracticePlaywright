@@ -29,7 +29,7 @@ export class LandingPage {
    }   
    async openWebsite(){
     await this.navigateToLandingPage();
-    //await this.page.waitForLoadState('domcontentloaded',{timeout:50000});   
+    await this.page.waitForLoadState('load',{timeout:50000});   
    }  
    async clickSignupLoginLink(){
     await this.act.clickSafe(this.signupLoginLink);

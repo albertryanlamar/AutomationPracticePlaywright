@@ -8,7 +8,5 @@ export class BasePage {
             waitUntil: 'domcontentloaded',
             timeout: 60000
         });
-
-        await this.page.waitForLoadState('networkidle');
     }
 }
