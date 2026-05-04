@@ -11,7 +11,7 @@ import { test, expect } from "../../src/fixture/testDataFixtures";
 
 test.describe('Cart Test Cases', () => {
     //const tcdata1= getTc('Add Products in Cart');
-
+    /*
     test('Add Products in Cart', { tag: '@sanity' }, async ({ basePage,landingPage, productPage, cartData, cartPage }) => {
         test.setTimeout(100000);
         await test.step('Navigate to landing page', async () => {
@@ -62,8 +62,20 @@ test.describe('Cart Test Cases', () => {
         });
 
     });
-    /*
-    test(`Place Order: Register while Checkout`, { tag: '@regression' }, async ({ landingPage,loginPage,accountPage, productPage, cartData, cartPage }) => {
+    */
+
+    test(`Place Order: Register while Checkout`, { tag: '@regression' }, async (
+        {
+            landingPage,
+            loginPage,
+            accountPage,
+            productPage,
+            cartData,
+            cartPage,
+            checkOutPage,
+            paymentDetailsPage,
+            paymentConfirmationPage
+        }) => {
         test.setTimeout(100000);
 
         await test.step('Navigate to landing page', async () => {
@@ -91,7 +103,7 @@ test.describe('Cart Test Cases', () => {
             for (const product of products) {
                 const result = await cartPage.verifyProductsInCart(product)
                 await Promise.all([
-                    expect(result.rowData).toBe(expectedCount),
+                    expect(result.rows).toBe(expectedCount),
                     expect(result.isPresent).toBeTruthy(),
                     expect(result.qty).toBe(product.quantity),
                     expect(result.price).toBe(product.price),
@@ -109,21 +121,82 @@ test.describe('Cart Test Cases', () => {
                 loginPage.page.waitForLoadState('load', { timeout: 80000 })
             ]);
         });
-        await test.step(`login existing user`, async () => {   
+        await test.step(`login existing user`, async () => {
             await loginPage.login(cartData.email, cartData.password);
         });
-        await test.step(`Verify that Logged in as username is visible`, async () => {   
+        await test.step(`Verify that Logged in as username is visible`, async () => {
             const text = await accountPage.verifyUserIsLoggedIn();
             expect(text.trim()).toContain(cartData.username);
         });
-        await test.step(``,async()=>{
+        await test.step(``, async () => {
             await accountPage.clickCartLink();
         })
         await test.step(`Click 'Proceed To Checkout' button`, async () => {
             await cartPage.clickProceedToCheckout();
+            await checkOutPage.page.waitForLoadState('domcontentloaded');
         });
-    })
 
-*/
+        await test.step(`Verify Address Details and Review Your Order`, async () => {
+            const deliveryDetails = await checkOutPage.getDeliveryDetails('delivery');
+            const billingDetails = await checkOutPage.getDeliveryDetails('billing');
+            expect(deliveryDetails.fullName.trim()).toBe(cartData.name);
+            expect(deliveryDetails.fullAddress.trim()).toBe(cartData.address);
+            expect(deliveryDetails.cityStateZip.trim()).toBe(cartData.cityStateZip);
+            expect(deliveryDetails.country.trim()).toBe(cartData.country);
+            expect(deliveryDetails.phone.trim()).toBe(cartData.phone);
+
+            const reviewOrderDetails = await checkOutPage.getReviewOrderDetails(products[0]);
+            expect(reviewOrderDetails.price).toBe(cartData.products[0].price);
+            expect(reviewOrderDetails.qty).toBe(cartData.products[0].quantity);
+            expect(reviewOrderDetails.total).toBe(cartData.products[0].price * cartData.products[0].quantity);
+
+
+        });
+
+        await test.step(` Enter description in comment text area and click 'Place Order'`, async () => {
+            const comment = "This is sample comment";
+            await Promise.all([
+                checkOutPage.writeComment(comment),
+                checkOutPage.clickPlaceOrder(),
+                paymentDetailsPage.page.waitForLoadState('domcontentloaded')
+            ])
+        })
+
+        await test.step(`Enter payment details: Name on Card, Card Number, CVC, Expiration date`, async () => {
+
+            const paymentDetails = {
+                "nameDetails": "dadsadsad",
+                "cardNo": 12122212,
+                "cvc": 311,
+                "expirationDate": "May 2026"
+            }
+
+            await paymentDetailsPage.FilloutPaymentDetails(paymentDetails);
+        })
+
+        await test.step(`Click 'Pay and Confirm Order' button`, async () => {
+            await paymentDetailsPage.clickPay();
+            await paymentConfirmationPage.page.waitForLoadState('domcontentloaded');
+        })
+        await test.step(`Download the invoice'`, async () => {
+            const res = await paymentConfirmationPage.clickDownloadButton();
+            await expect(res.fileName).toContain('invoice');
+            await expect(res.path).toBeTruthy();
+        })
+
+        await test.step(`Verify success message 'Your order has been placed successfully!'`, async () => {
+            const isPresent = await paymentConfirmationPage.confirmationMessage('Your order has been placed successfully!');
+            await expect(isPresent).toBeVisible();
+        })
+
+        await test.step(`Click 'Continue' button`, async () => {
+            await paymentConfirmationPage.clickContinue();
+            await landingPage.page.waitForLoadState('domcontentloaded');
+            await expect(landingPage.page).toHaveTitle('Automation Exercise');
+        })
+
+
+
+    })
 
 })

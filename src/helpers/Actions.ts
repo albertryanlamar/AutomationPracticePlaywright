@@ -50,4 +50,14 @@ export class Actions {
     await expect(element).toBeVisible();
     await element.selectOption({ value: `${value}`});
   }
+
+  async safeDownload(element: Locator, page:any) {
+    await expect(element).toBeVisible({ timeout: 5000 });
+    await expect(element).toBeEnabled();
+    const [ download ] = await Promise.all([
+      page.waitForEvent('download'),
+      element.click()
+    ]);
+    return download;
+  }
 }
