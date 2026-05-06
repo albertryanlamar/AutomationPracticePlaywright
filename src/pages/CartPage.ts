@@ -57,6 +57,34 @@ export class CartPage {
         };
     }
 
+    async removeProductinCart(productName:String){
+        const rowCount = await this.itemRow.all();
+        for (const rowData of rowCount){
+            const description = await rowData.locator('.cart_description h4 a').innerText();
+            const closedButton:Locator = await rowData.locator();
+            if(description.trim()===productName.trim()){
+                await closedButton.click();
+                break;
+            }
+                
+        }
+    }
+
+    async verifyPoductisRemoved(productName:String){
+        const rowCount = await this.itemRow.all();
+        if(rowCount.length===0){
+           return true;
+        }else{
+            for (const rowData of rowCount){
+            const description = await rowData.locator('.cart_description h4 a').innerText();
+            if(description.trim()===productName.trim()){
+                return true;
+            }
+                
+        }
+        }
+    }
+
     async clickProceedToCheckout() {
         await this.act.clickSafe(this.proceedToCheckout);  
     }

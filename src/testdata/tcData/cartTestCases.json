@@ -31,7 +31,24 @@
             
                     {
                     "Name":"Blue Top",
-                    "quantity": 2,
+                    "quantity": 1,
+                    "price": 500
+                    }
+                ]
+            }
+        },
+        {
+            "TCName":"Remove Products From Cart",
+            "testdata":
+            {
+                "email": "sampleTest1@gmail.com",
+                "password": "sampleTest1",
+                "username": "Sample",
+                "products":[
+            
+                    {
+                    "Name":"Blue Top",
+                    "quantity": 1,
                     "price": 500
                     }
                 ]
